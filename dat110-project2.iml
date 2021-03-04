@@ -9,23 +9,18 @@
   <component name="NewModuleRootManager">
     <output url="file://$MODULE_DIR$/bin" />
     <exclude-output />
+    <content url="file://C:/Program Files/openjfx-11.0.2_windows-x64_bin-sdk" />
+    <content url="file://$MODULE_DIR$/../dat110-project2-chapp">
+      <sourceFolder url="file://$MODULE_DIR$/../dat110-project2-chapp/Chapp/src" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../dat110-project2-testing">
       <sourceFolder url="file://$MODULE_DIR$/../dat110-project2-testing" isTestSource="true" />
     </content>
-    <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="module-library" exported="">
-      <library name="gson-2.8.5.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/libs/gson-2.8.5.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" scope="TEST">
       <library name="JUnit4">
         <CLASSES>
@@ -36,5 +31,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="JavaFX" level="project" />
+    <orderEntry type="library" name="gson-2.8.5" level="project" />
   </component>
 </module>
