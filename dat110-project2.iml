@@ -21,7 +21,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" scope="TEST">
+    <orderEntry type="module-library" exported="" scope="TEST">
       <library name="JUnit4">
         <CLASSES>
           <root url="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12.jar!/" />
@@ -31,7 +31,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="JavaFX" level="project" />
-    <orderEntry type="library" name="gson-2.8.5" level="project" />
+    <orderEntry type="library" exported="" name="JavaFX" level="project" />
+    <orderEntry type="library" exported="" name="gson" level="project" />
   </component>
 </module>
