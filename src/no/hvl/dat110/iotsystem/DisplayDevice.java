@@ -2,8 +2,10 @@ package no.hvl.dat110.iotsystem;
 
 import no.hvl.dat110.client.Client;
 import no.hvl.dat110.messages.Message;
+import no.hvl.dat110.messages.MessageType;
 import no.hvl.dat110.messages.PublishMsg;
 import no.hvl.dat110.common.TODO;
+import static no.hvl.dat110.iotsystem.Common.*;
 
 public class DisplayDevice {
 	
@@ -16,18 +18,24 @@ public class DisplayDevice {
 		// DONE - START
 				
 		// create a client object and use it to
-		Client client = new Client("display","sensor",8080);
-		String tmp= "temperature";
+		Client client = new Client("display",BROKERHOST,BROKERPORT);
+
 		// - connect to the broker
 		client.connect();
 		// - create the temperature topic on the broker
-		client.createTopic(tmp);
+		client.createTopic(TEMPTOPIC);
 		// - subscribe to the topic
-		client.subscribe(tmp);
+		client.subscribe(TEMPTOPIC);
 		// - receive messages on the topic
-		client.receive();
+
+		for (int i= 0; i<COUNT;i++) {
+			Message msg = client.receive();
+		if(msg.getType() == MessageType.PUBLISH) {
+			System.out.println("User: "+msg.getUser() + "\n" + "Temperature: " + ((PublishMsg)msg).getMessage());
+		}
+		}
 		// - unsubscribe from the topic
-		client.unsubscribe(tmp);
+		client.unsubscribe(TEMPTOPIC);
 		// - disconnect from the broker
 		client.disconnect();
 		
