@@ -1,6 +1,7 @@
 package no.hvl.dat110.broker;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -52,48 +53,86 @@ public class Storage {
 
 	public void addClientSession(String user, Connection connection) {
 
-		// TODO: add corresponding client session to the storage
-		
-		throw new UnsupportedOperationException(TODO.method());
-		
+		// DONE: add corresponding client session to the storage
+		if(!clients.containsKey(user)) {
+			ClientSession clientSession = new ClientSession(user, connection);
+			clients.put(user, clientSession);
+			return;
+		}
+		Logger.log("Client already exists!");
+
+
 	}
 
 	public void removeClientSession(String user) {
 
-		// TODO: remove client session for user from the storage
-
-		throw new UnsupportedOperationException(TODO.method());
+		// DONE: remove client session for user from the storage
+		if(clients.containsKey(user)) {
+			clients.remove(user);
+			return;
+		}
+		Logger.log("Client does not exists!");
 		
 	}
 
 	public void createTopic(String topic) {
 
-		// TODO: create topic in the storage
+		// DONE: create topic in the storage
+		if (!subscriptions.containsKey(topic)){
+			subscriptions.put(topic, new HashSet<>());
+			return;
+		}
+		Logger.log("Topic already exists!");
 
-		throw new UnsupportedOperationException(TODO.method());
+
 	
 	}
 
 	public void deleteTopic(String topic) {
 
-		// TODO: delete topic from the storage
+		// DONE: delete topic from the storage
 
-		throw new UnsupportedOperationException(TODO.method());
+		if (subscriptions.containsKey(topic)){
+			subscriptions.remove (topic);
+			return;
+		}
+		Logger.log("Topic does not exists!");
+
 		
 	}
 
 	public void addSubscriber(String user, String topic) {
 
-		// TODO: add the user as subscriber to the topic
+		// DONE: add the user as subscriber to the topic
+		if (subscriptions.containsKey(topic)){
+			if(!subscriptions.get(topic).contains(user)) {
+				subscriptions.get(topic).add(user);
+				return;
+			}
+			Logger.log("User already subscribed to topic!");
+			return;
+		}
+		Logger.log("Topic does not exists!");
+
 		
-		throw new UnsupportedOperationException(TODO.method());
+
 		
 	}
 
 	public void removeSubscriber(String user, String topic) {
 
-		// TODO: remove the user as subscriber to the topic
+		// DONE: remove the user as subscriber to the topic
 
-		throw new UnsupportedOperationException(TODO.method());
+		if (subscriptions.containsKey(topic)){
+			if(subscriptions.get(topic).contains(user)) {
+				subscriptions.get(topic).remove(user);
+				return;
+			}
+			Logger.log("User is not subscribed to topic!");
+
+			return;
+		}
+		Logger.log("Topic does not exist!");
+
 	}
 }

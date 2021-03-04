@@ -13,22 +13,29 @@ public class DisplayDevice {
 		
 		System.out.println("Display starting ...");
 		
-		// TODO - START
+		// DONE - START
 				
 		// create a client object and use it to
-		
+		Client client = new Client("display","sensor",8080);
+		String tmp= "temperature";
 		// - connect to the broker
+		client.connect();
 		// - create the temperature topic on the broker
+		client.createTopic(tmp);
 		// - subscribe to the topic
+		client.subscribe(tmp);
 		// - receive messages on the topic
+		client.receive();
 		// - unsubscribe from the topic
+		client.unsubscribe(tmp);
 		// - disconnect from the broker
+		client.disconnect();
 		
-		// TODO - END
+		// DONE - END
 		
 		System.out.println("Display stopping ... ");
 		
-		throw new UnsupportedOperationException(TODO.method());
+
 		
 	}
 }
