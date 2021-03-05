@@ -7,110 +7,132 @@ import java.io.IOException;
 import java.net.Socket;
 
 
-public class Connection {
+public class Connection
+{
 
-	private DataOutputStream outStream; // for writing bytes to the TCP connection
-	private DataInputStream inStream; // for reading bytes from the TCP connection
-	private Socket socket; // socket for the underlying TCP connection
+    private DataOutputStream outStream; // for writing bytes to the TCP connection
+    private DataInputStream inStream; // for reading bytes from the TCP connection
+    private Socket socket; // socket for the underlying TCP connection
 
-	public Connection(Socket socket) {
+    public Connection(Socket socket)
+    {
 
-		try {
+        try
+        {
 
-			this.socket = socket;
+            this.socket = socket;
 
-			outStream = new DataOutputStream(socket.getOutputStream());
+            outStream = new DataOutputStream(socket.getOutputStream());
 
-			inStream = new DataInputStream (socket.getInputStream());
+            inStream = new DataInputStream(socket.getInputStream());
 
-		} catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
 
-			System.out.println("Connection: " + ex.getMessage());
-			ex.printStackTrace();
-		}
-	}
+            System.out.println("Connection: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
 
-	public void send(TransportMessage message) {
+    public void send(TransportMessage message)
+    {
 
-		// TODO 
-		// encapsulate the data contained in the message and write to the output stream
-		
-		try {
+        // DONE
+        // encapsulate the data contained in the message and write to the output stream
 
-			byte[] sendbuf = message.encapsulate();
+        try
+        {
 
-			outStream.write(sendbuf);
+            byte[] sendbuf = message.encapsulate();
 
-		} catch (IOException ex) {
+            outStream.write(sendbuf);
 
-			System.out.println("Connection: " + ex.getMessage());
-			ex.printStackTrace();
-		}
+        }
+        catch (IOException ex)
+        {
 
-	}
+            System.out.println("Connection: " + ex.getMessage());
+            ex.printStackTrace();
+        }
 
-	public boolean hasData () {
-		
-		boolean hasdata = false;
-		
-		try {
-			
-			hasdata = inStream.available() > 0;
-			
-		} catch (IOException ex) {
+    }
 
-			System.out.println("Connection: " + ex.getMessage());
-			ex.printStackTrace();
-		}
-		
-		return hasdata;
-	}
+    public boolean hasData()
+    {
 
-	public TransportMessage receive() {
+        boolean hasdata = false;
 
-		TransportMessage message;
-		byte[] recvbuf;
-		
-		// TODO
-		// read a segment from the input stream and decapsulate into message
-		
-		recvbuf = new byte[MessageConfig.SEGMENTSIZE];
-		
-		try {
-				
-			int read = inStream.read(recvbuf,0,MessageConfig.SEGMENTSIZE);
-			
-			if (read != MessageConfig.SEGMENTSIZE) {
-				throw new IOException("receive - missing data");
-			}
-				
-		} catch (IOException ex) {
+        try
+        {
 
-			System.out.println("Connection: " + ex.getMessage());
-			// ex.printStackTrace();
-		}
-		
-		message = new TransportMessage();
-		
-		message.decapsulate(recvbuf);
-		
-		return message;
-		
-	}
+            hasdata = inStream.available() > 0;
 
-	// close the connection by closing streams and the underlying socket
-	public void close() {
+        }
+        catch (IOException ex)
+        {
 
-		try {
-			
-			outStream.close();
-			inStream.close();
+            System.out.println("Connection: " + ex.getMessage());
+            ex.printStackTrace();
+        }
 
-			socket.close();
-		} catch (IOException ex) {
+        return hasdata;
+    }
 
-			System.out.println("Connection: " + ex.getMessage());
-			ex.printStackTrace();
-		}
-	}
+    public TransportMessage receive()
+    {
+
+        TransportMessage message;
+        byte[] recvbuf;
+
+        // DONE
+        // read a segment from the input stream and decapsulate into message
+
+        recvbuf = new byte[MessageConfig.SEGMENTSIZE];
+
+        try
+        {
+
+            int read = inStream.read(recvbuf, 0, MessageConfig.SEGMENTSIZE);
+
+            if (read != MessageConfig.SEGMENTSIZE)
+            {
+                throw new IOException("receive - missing data");
+            }
+
+        }
+        catch (IOException ex)
+        {
+
+            System.out.println("Connection: " + ex.getMessage());
+            // ex.printStackTrace();
+        }
+
+        message = new TransportMessage();
+
+        message.decapsulate(recvbuf);
+
+        return message;
+
+    }
+
+    // close the connection by closing streams and the underlying socket
+    public void close()
+    {
+
+        try
+        {
+
+            outStream.close();
+            inStream.close();
+
+            socket.close();
+        }
+        catch (IOException ex)
+        {
+
+            System.out.println("Connection: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
 }
